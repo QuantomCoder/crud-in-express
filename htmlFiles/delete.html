@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>form {
+      margin: 20px;
+      text-align: center;
+    }
+    
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+    }
+    
+    button[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+    </style>
+</head>
+<body>
+    <form>
+        <input type="text" id="token-input">
+        <button type="submit" id="delete">Delete</button>
+      </form>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const deleteBtn = document.getElementById("delete");
+    console.log(deleteBtn);
+    deleteBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const token1 = document.getElementById("token-input").value;
+        const response = await axios.delete("http://localhost:3015/delete", {
+            token: token1,
+        });
+        const resultDiv = document.createElement("result");
+        resultDiv.textContent = JSON.stringify(response.data);
+        document.body.appendChild(resultDiv);
+    });
+</script>
+</html>

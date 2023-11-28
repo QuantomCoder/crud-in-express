@@ -3,12 +3,14 @@ const { json } = require("express");
 let api = require("./routes/routes.js");
 let multer= require("multer")
 let path =require("path")
+let cors = require("cors")
 let coustomerdata = [
   { id: "3", email: "abc@quantomtech.com", product: "vibranium" },
   { id: "6", email: "xyz@quantomtech.com", product: "Cadmium" },
 ];
 const server = express();
 server.use(json());
+server.use(cors())
 server.use("/api", api);
 // firstapi
 const jwt = require("jsonwebtoken");
@@ -36,8 +38,9 @@ server.post("/getdetailusingtoken", (req, res) => {
     }
   });
 });
+// server.use('/adddata', createProxyMiddleware({ target: 'http://localhost:3015', changeOrigin: true }));
 server.post("/adddata", (req, res) => {
-  coustomerdata.push(req.body.token);
+  coustomerdata.push({id :req.body.userID,email:req.body.userEmail,product:req.body.userProduct});
   res.send(coustomerdata);
 });
 server.patch("/updatedata", (req, res) => {
@@ -47,7 +50,9 @@ server.patch("/updatedata", (req, res) => {
     } else {
       for (const iterator of coustomerdata) {
         if (iterator.id == dec.id) {
-          iterator.product = req.body.product;
+          iterator.id=req.body.userID;
+          iterator.product = req.body.userProduct;
+          iterator.email = req.body.userEmail;
           res.send(iterator);
           break;
         }

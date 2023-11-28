@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <button id="getT">Get Token</button>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const getT = document.getElementById("getT");
+    console.log(getT);
+    getT.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const response = await axios.get("http://localhost:3015/gettoken");
+        const resultDiv = document.createElement("result");
+        resultDiv.textContent = JSON.stringify(response.data);
+        document.body.appendChild(resultDiv);
+    });
+</script>
+</html>
